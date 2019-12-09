@@ -20,16 +20,16 @@ class StudentController {
         .required(),
     });
 
-    // if (!(await schema.isValid(req.body))) {
-    //   return res.status(400).json({ error: 'Validation fails!' });
-    // }
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
 
-    // const studentExists = await Student.findOne({ where: { email: req.body.email } });
+    const studentExists = await Student.findOne({ where: { email: req.body.email } });
 
-    // if (studentExists) {
-    //   return res.status(400).json({ error: 'Student already exists.' });
-    // }
-    console.log(req.body);
+    if (studentExists) {
+      return res.status(400).json({ error: 'Student already exists.' });
+    }
+    
     const student = await Student.create(req.body);
 
     return res.json(student);
